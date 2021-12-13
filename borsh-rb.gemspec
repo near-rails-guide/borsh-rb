@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/borsh/rb/version"
+require_relative "lib/borsh/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "borsh-rb"
-  spec.version       = Borsh::Rb::VERSION
+  spec.version       = Borsh::VERSION
   spec.authors       = ["Serg Tyatin"]
   spec.email         = ["700@2rba.com"]
 
@@ -27,8 +27,8 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  # Uncomment to register a new dependency of your gem
-  # spec.add_dependency "example-gem", "~> 1.0"
+  spec.add_development_dependency "rspec", "~> 3.10"
+  spec.add_development_dependency "pry"
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html
