@@ -21,4 +21,10 @@ RSpec.describe Borsh::Integer do
   it 'serializes :u64' do
     expect(described_class.new(value, :u64).to_borsh).to eq([128, 0, 0, 0, 0, 0, 0, 0].map(&:chr).join)
   end
+
+  it 'serializes :u128' do
+    expect(described_class.new(value, :u128).to_borsh).to eq(
+      [128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map(&:chr).join
+    )
+  end
 end
