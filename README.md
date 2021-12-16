@@ -50,7 +50,7 @@ end
 
 Serialize as: `User.new.to_borsh`
 
-Supported types: `:string, :u8, :u16, :u32, :u64, :u128, Integer, :borsh`
+Supported types: `:string, :u8, :u16, :u32, :u64, :u128, Integer, Array, :borsh`
 Integer as a type is supported to validate preserialized value length (for ex. public key)
 
 ## Contributing

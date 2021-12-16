@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "borsh/borsh"
+require 'borsh'
 require 'pry'
 
 RSpec.configure do |config|
