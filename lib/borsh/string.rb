@@ -5,7 +5,7 @@ class Borsh::String
 
   def to_borsh
     length = [value.length].pack('V')
-    raise ArgumentError, 'string too long' if length.unpack('V') != [value.length]
+    raise Borsh::ArgumentError, 'string too long' if length.unpack('V') != [value.length]
 
     length + value
   end

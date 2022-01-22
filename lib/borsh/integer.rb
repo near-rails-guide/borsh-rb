@@ -19,11 +19,11 @@ class Borsh::Integer
                  higher = (value >> 64) & 0xFFFFFFFF
                  return [lower, higher].pack('Q<*')
                else
-                 raise ArgumentError, "unknown type #{type}"
+                 raise Borsh::ArgumentError, "unknown type #{type}"
                end
 
     result = [value].pack(pack_arg)
-    raise ArgumentError, 'Integer serialization failure' if result.unpack(pack_arg) != [value]
+    raise Borsh::ArgumentError, 'Integer serialization failure' if result.unpack(pack_arg) != [value]
 
     result
   end

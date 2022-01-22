@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 RSpec.describe Borsh::ByteString do
-  subject(:serialized) { described_class.new(value, 32).to_borsh }
+  subject(:serialized) { described_class.new(value, 4).to_borsh }
 
   let(:value) { 'test' }
 

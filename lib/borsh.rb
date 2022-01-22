@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'borsh/version'
+require_relative 'borsh/argument_error'
 require_relative 'borsh/string'
 require_relative 'borsh/integer'
 require_relative 'borsh/byte_string'
@@ -25,7 +26,11 @@ module Borsh
     when ::Integer
       Borsh::ByteString.new(value, schema).to_borsh
     when ::Hash
-      schema.map{ |entry_source, entry_schema| to_borsh_schema(value.send(entry_source), entry_schema) }.join
+      schema.map do |entry_source, entry_schema|
+        to_borsh_schema(value.send(entry_source), entry_schema)
+      rescue Borsh::ArgumentError => e
+        raise Borsh::ArgumentError.new("#{entry_source} => #{e.message}")
+      end.join
     when ::Array
       Integer.new(value.count, :u32).to_borsh + \
       value.flat_map do |item|

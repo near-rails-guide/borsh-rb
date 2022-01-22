@@ -5,7 +5,7 @@ class Borsh::ByteString
   end
 
   def to_borsh
-    raise ArgumentError, 'ByteString length mismatch' if value.size != length
+    raise Borsh::ArgumentError, 'ByteString length mismatch' if value.size != length
 
     value
   end

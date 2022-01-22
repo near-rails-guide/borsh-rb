@@ -58,7 +58,7 @@ RSpec.describe Borsh do
       Class.new do
         include Borsh
 
-        borsh key: 32
+        borsh key: 4
 
         def key
           'test'
@@ -68,6 +68,43 @@ RSpec.describe Borsh do
 
     it 'returns serialized result' do
       expect(klass.new.to_borsh).to eq('test')
+    end
+  end
+
+  context 'with nested serialsation' do
+    subject(:object) { klass.new(signer_id, key) }
+    subject(:klass) do
+      Class.new do
+        include Borsh
+
+        attr_reader :signer_id, :key
+
+        def initialize(signer_id, key)
+          @signer_id = signer_id
+          @key = key
+        end
+
+        borsh signer_id: :string,
+              key: { key_type: :u8, public_key: 32 }
+      end
+    end
+
+    let(:signer_id) { '1234' }
+    let(:key) { OpenStruct.new(key_type: 0, public_key: '1' * 32) }
+
+    it 'delegates serialisation' do
+      expect(object.to_borsh).to eq(
+        [0x04, 0, 0, 0].map(&:chr).join + '1234' + [0x0].map(&:chr).join + '1' * 32
+      )
+    end
+
+    context 'with incorreсt public_key size' do
+
+      let(:key) { OpenStruct.new(key_type: 0, public_key: '1') }
+
+      it 'raises error' do
+        expect { object.to_borsh }.to raise_error ::Borsh::ArgumentError, 'key => public_key => ByteString length mismatch'
+      end
     end
   end
 
