@@ -15,8 +15,8 @@ class Borsh::Integer
                when :u64
                 'Q<'
                when :u128
-                 lower = value & 0xFFFFFFFF
-                 higher = (value >> 64) & 0xFFFFFFFF
+                 lower = value & 0xFFFFFFFFFFFFFFFF
+                 higher = (value >> 64) & 0xFFFFFFFFFFFFFFFF
                  return [lower, higher].pack('Q<*')
                else
                  raise Borsh::ArgumentError, "unknown type #{type}"

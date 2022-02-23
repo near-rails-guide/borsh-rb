@@ -26,5 +26,8 @@ RSpec.describe Borsh::Integer do
     expect(described_class.new(value, :u128).to_borsh).to eq(
       [128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map(&:chr).join
     )
+    expect(described_class.new(10**24, :u128).to_borsh).to eq(
+      [0, 0, 0, 0xA1, 0xED, 0xCC, 0xCE, 0x1B, 0xC2, 0xD3, 0, 0, 0, 0, 0, 0].map(&:chr).join
+    )
   end
 end
